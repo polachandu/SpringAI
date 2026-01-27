@@ -19,6 +19,8 @@ public class OpenAiChatController {
 
     @GetMapping("/chat")
     public String chat(@RequestParam("message") String message) {
-        return chatClient.prompt().user(message).call().content();
+        return chatClient.prompt()
+                // .system - using system here overrides the defaultSystem
+                .user(message).call().content();
     }
 }
