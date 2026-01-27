@@ -12,12 +12,12 @@ public class DockerGemmaAiChatController {
 
     private final ChatClient chatClient;
 
-    public DockerGemmaAiChatController(ChatClient.Builder chatClientBuilder){
+    public DockerGemmaAiChatController(ChatClient.Builder chatClientBuilder) {
         this.chatClient = chatClientBuilder.build();
     }
 
     @GetMapping("/chat")
-    public String chat(@RequestParam("message") String message){
+    public String chat(@RequestParam("message") String message) {
         return chatClient.prompt(message).call().content();
     }
 }

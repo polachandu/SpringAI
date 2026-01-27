@@ -12,12 +12,13 @@ public class OpenAiChatController {
 
     private final ChatClient chatClient;
 
-    public OpenAiChatController(ChatClient.Builder chatClientBuilder){
-        this.chatClient = chatClientBuilder.build();
+    public OpenAiChatController(ChatClient.Builder chatClientBuilder) {
+        this.chatClient = chatClientBuilder.defaultSystem("Act like a motivator and inspire me to keep learn and earn")
+                .build();
     }
 
     @GetMapping("/chat")
-    public String chat(@RequestParam("message") String message){
-        return chatClient.prompt(message).call().content();
+    public String chat(@RequestParam("message") String message) {
+        return chatClient.prompt().user(message).call().content();
     }
 }
