@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 public class PromptTemplateController {
 
     @Autowired
-    @Qualifier("chatClient")
     private ChatClient chatClient;
 
     @Value("classpath:/promptTemplates/UserPromptTemplate.st")
