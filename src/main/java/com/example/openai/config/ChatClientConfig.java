@@ -1,10 +1,14 @@
 package com.example.openai.config;
 
+import java.util.List;
+
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+
+import com.example.advisor.TokenUsageAuditAdvisor;
 
 @Configuration
 public class ChatClientConfig {
@@ -13,7 +17,7 @@ public class ChatClientConfig {
     @Primary
     public ChatClient chatClient(ChatClient.Builder chatClientBuilder) {
         return chatClientBuilder
-        .defaultAdvisors(new SimpleLoggerAdvisor())
+        .defaultAdvisors(List.of(new SimpleLoggerAdvisor(), new TokenUsageAuditAdvisor()))
         .defaultSystem(
                 "You are an agriculture specialist. Your role is to help people with questions related to soil, season, fruits and vegetables"
                         + "If any user asks outside of these topics, inform them to consult chatgpt ")
