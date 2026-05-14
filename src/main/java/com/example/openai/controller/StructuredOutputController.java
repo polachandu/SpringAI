@@ -3,9 +3,11 @@ package com.example.openai.controller;
 import com.example.openai.model.CountryCities;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.converter.ListOutputConverter;
 import org.springframework.ai.converter.MapOutputConverter;
 import org.springframework.ai.converter.StructuredOutputConverter;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +44,12 @@ public class StructuredOutputController {
     @GetMapping("/chat-map")
     public ResponseEntity<Map<String, Object>> chatMap(@RequestParam("message") String message){
         Map<String, Object> countryCities = chatClient.prompt().user(message).call().entity(new MapOutputConverter());
+        return ResponseEntity.ok(countryCities);
+    }
+
+    @GetMapping("/listOfCountriesCities")
+    public ResponseEntity<List<CountryCities>> listOfCountriesCities(@RequestParam("message") String message){
+        List<CountryCities> countryCities = chatClient.prompt().user(message).call().entity(new ParameterizedTypeReference<List<CountryCities>>(){});
         return ResponseEntity.ok(countryCities);
     }
 
