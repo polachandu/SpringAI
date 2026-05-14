@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
-import com.example.advisor.TokenUsageAuditAdvisor;
+import com.example.openai.advisor.TokenUsageAuditAdvisor;
 
 @Configuration
 public class ChatClientConfig {
