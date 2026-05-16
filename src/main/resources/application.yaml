@@ -1,6 +1,11 @@
 spring:
   application:
     name: openai
+  datasource:
+    url : jdbc:h2:file:~/chatmemory;AUTO_SERVER=true
+    driver-class-name : org.h2.Driver
+    username : chandu
+    password : 12345
 
   ai:
     openai:
@@ -9,6 +14,12 @@ spring:
       #   options:
       #     model: ai/gemma3
       #   base-url: http://localhost:12434/engines
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
+
 logging:
   pattern:
     console: '%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n'

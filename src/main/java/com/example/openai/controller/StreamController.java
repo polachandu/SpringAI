@@ -17,10 +17,6 @@ public class StreamController {
 
     @GetMapping("/stream")
     public Flux<String> stream(@RequestParam("message") String message) {
-        return chatClient
-            .prompt()
-            .user(message)
-            .stream()
-            .content();
+        return chatClient.prompt().user(message).stream().content();
     }
 }

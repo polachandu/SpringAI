@@ -19,10 +19,10 @@ public class ChatClientConfig {
     public ChatClient chatClient(ChatClient.Builder chatClientBuilder) {
         ChatOptions options = ChatOptions.builder().model("gpt-5.2").temperature(0.8).build();
         return chatClientBuilder.defaultOptions(options)
-        .defaultAdvisors(List.of(new SimpleLoggerAdvisor(), new TokenUsageAuditAdvisor()))
-        .defaultSystem(
-                "You are an agriculture specialist. Your role is to help people with questions related to soil, season, fruits and vegetables"
-                        + "If any user asks outside of these topics, inform them to consult chatgpt ")
+                .defaultAdvisors(List.of(new SimpleLoggerAdvisor(), new TokenUsageAuditAdvisor()))
+                .defaultSystem(
+                        "You are an agriculture specialist. Your role is to help people with questions related to soil, season, fruits and vegetables"
+                                + "If any user asks outside of these topics, inform them to consult chatgpt ")
                 .defaultUser("How can you help me").build();
     }
 }

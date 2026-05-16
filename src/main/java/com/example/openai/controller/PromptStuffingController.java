@@ -23,11 +23,7 @@ public class PromptStuffingController {
 
     @GetMapping("/prompt-stuffing")
     public String promptStuffing(@RequestParam("message") String message) {
-        return chatClient.prompt()
-        .options(OpenAiChatOptions.builder().model(ChatModel.GPT_5_CHAT_LATEST).build())
-                .system(systemPromptTemplate)
-                .user(message)
-                .call().content();
+        return chatClient.prompt().options(OpenAiChatOptions.builder().model(ChatModel.GPT_5_CHAT_LATEST).build())
+                .system(systemPromptTemplate).user(message).call().content();
     }
 }
- 
