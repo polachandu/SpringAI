@@ -19,6 +19,17 @@ spring:
         repository:
           jdbc:
             initialize-schema: always
+    vectorstore:
+      qdrant:
+        host: localhost
+        port: 6334
+        collection-name: chandu
+        initialize-schema: true
+  docker:
+    compose:
+      stop:
+        command: down
+
 
 logging:
   pattern:
