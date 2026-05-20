@@ -20,6 +20,7 @@ import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
 public class RAGController {
 
     private final ChatClient chatClient;
+    private final ChatClient webSearchChatClient;
     private final VectorStore vectorStore;
 
     @Value("classpath:/promptTemplates/SystemPromptRandomDataTemplate.st")
@@ -28,8 +29,10 @@ public class RAGController {
     @Value("classpath:/promptTemplates/documentPromptTemplate.st")
     Resource docPromptTemplate;
 
-    public RAGController(@Qualifier("chatMemoryChatClientBean") ChatClient chatClient, VectorStore vectorStore) {
+    public RAGController(@Qualifier("chatMemoryChatClientBean") ChatClient chatClient,
+            @Qualifier("webSearchRAGChatClient") ChatClient webSearchChatClient, VectorStore vectorStore) {
         this.chatClient = chatClient;
+        this.webSearchChatClient = webSearchChatClient;
         this.vectorStore = vectorStore;
     }
 
@@ -55,6 +58,21 @@ public class RAGController {
         // String similarContext = similarDocs.stream().map(Document::getText)
         // .collect(Collectors.joining(System.lineSeparator()));
         String answer = chatClient.prompt()
+                // .system(promptSystemSpec -> promptSystemSpec.text(docPromptTemplate).param("documents",
+                // similarContext))
+                .advisors(a -> a.param(CONVERSATION_ID, username)).user(message).call().content();
+        return ResponseEntity.ok(answer);
+    }
+
+    @GetMapping("/webSearch/chat")
+    public ResponseEntity<String> webSearchChat(@RequestHeader("username") String username,
+            @RequestParam("message") String message) {
+        // SearchRequest searchRequest =
+        // SearchRequest.builder().query(message).topK(3).similarityThreshold(0.5).build();
+        // List<Document> similarDocs = vectorStore.similaritySearch(searchRequest);
+        // String similarContext = similarDocs.stream().map(Document::getText)
+        // .collect(Collectors.joining(System.lineSeparator()));
+        String answer = webSearchChatClient.prompt()
                 // .system(promptSystemSpec -> promptSystemSpec.text(docPromptTemplate).param("documents",
                 // similarContext))
                 .advisors(a -> a.param(CONVERSATION_ID, username)).user(message).call().content();
