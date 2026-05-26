@@ -2,6 +2,9 @@ package com.example.openai.config;
 
 import com.example.openai.advisor.TokenUsageAuditAdvisor;
 import com.example.openai.utils.TimeTools;
+import org.springframework.ai.tool.execution.DefaultToolExecutionExceptionProcessor;
+import org.springframework.ai.tool.execution.ToolExecutionException;
+import org.springframework.ai.tool.execution.ToolExecutionExceptionProcessor;
 import org.springframework.core.io.Resource;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
@@ -28,4 +31,9 @@ public class HelpDeskChatClientConfig {
         return chatClientBuilder.defaultSystem(helpDeskTemplate).defaultTools(timeTools)
                 .defaultAdvisors(List.of(loggerAdvisor, tokenUsageAdvisor, memoryAdvisor)).build();
     }
+
+    // @Bean
+    // public ToolExecutionExceptionProcessor toolExecutionExceptionProcessor(){
+    // return new DefaultToolExecutionExceptionProcessor(true);
+    // }
 }

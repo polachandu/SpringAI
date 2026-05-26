@@ -32,4 +32,13 @@ public class HelpDeskTools {
         String username = (String) toolContext.getContext().get("username");
         return helpDeskTicketService.getTicketsByUsername(username);
     }
+
+    @Tool(name = "createTicket", description = "Create a support ticket", returnDirect = true)
+    String createTicketWithReturnDirect(
+            @ToolParam(description = "Details to create a support ticket") TicketRequest ticketRequest,
+            ToolContext toolContext) {
+        String username = (String) toolContext.getContext().get("username");
+        HelpDeskTicket savedTicket = helpDeskTicketService.createTicket(ticketRequest, username);
+        return "Ticket #" + savedTicket.getId() + " created successfully for user " + savedTicket.getUsername();
+    }
 }
