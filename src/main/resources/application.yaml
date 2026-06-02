@@ -38,6 +38,12 @@ logging:
   level:
     org.springframework.ai.chat.client.advisor: DEBUG
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+
 
 
 
